@@ -77,7 +77,7 @@ function inverseMinMaxNormalization(normalizedData, feature) {
 
 function inverseMinMaxNormalizationAll(data, feature) {
   return data.map((arr) => {
-    arr = inverseMinMaxNormalization(arr[0], feature);
+    arr = inverseMinMaxNormalization(arr, feature);
     return arr;
   });
 }
