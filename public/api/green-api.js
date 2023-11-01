@@ -90,7 +90,7 @@ function inverseMinMaxNormalizationAll(data) {
 
 function transformArrayOfObjectsToArray(inputArray) {
   return inputArray.map((item) => {
-    return [item.suhu, item.kelembaban_udara, item.penyinaran_matahari, item.curah_hujan];
+    return [item.suhu_minimum, item.suhu_maksimum, item.suhu_rata_rata, item.kelembaban_udara, item.curah_hujan, item.penyinaran_matahari];
   });
 }
 
@@ -105,6 +105,20 @@ function transformObjectsToArray(obj) {
 }
 
 function fetchModel(feature, timestep = 30) {
+  if (feature == "suhu_minimum") {
+    feature = "Tn";
+  } else if (feature == "suhu_maksimum") {
+    feature = "Tx";
+  } else if (feature == "suhu_rata_rata") {
+    feature = "Tavg";
+  } else if (feature == "kelembaban_udara") {
+    feature = "RH_avg";
+  } else if (feature == "curah_hujan") {
+    feature = "RR";
+  } else if (feature == "penyinaran_matahari") {
+    feature = "ss";
+  }
+
   return fetch(SERVER_ROOT + "/weather?feature=" + feature + "&timestep=" + timestep)
     .then((response) => {
       if (response.status !== 200) {
