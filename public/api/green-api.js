@@ -75,15 +75,9 @@ function inverseMinMaxNormalization(normalizedData, feature) {
   return originalData;
 }
 
-function inverseMinMaxNormalizationAll(data) {
-  let arrayOfArrays = [data];
-  return arrayOfArrays.map((arr) => {
-    arr[0] = inverseMinMaxNormalization(arr[0], "suhu_minimum");
-    arr[1] = inverseMinMaxNormalization(arr[1], "suhu_maksimum");
-    arr[2] = inverseMinMaxNormalization(arr[2], "suhu_rata_rata");
-    arr[3] = inverseMinMaxNormalization(arr[3], "kelembaban_udara");
-    arr[4] = inverseMinMaxNormalization(arr[4], "curah_hujan");
-    arr[5] = inverseMinMaxNormalization(arr[5], "penyinaran_matahari");
+function inverseMinMaxNormalizationAll(data, feature) {
+  return data.map((arr) => {
+    arr = inverseMinMaxNormalization(arr[0], feature);
     return arr;
   });
 }
