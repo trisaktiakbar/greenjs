@@ -104,8 +104,8 @@ function transformObjectsToArray(obj) {
   return result;
 }
 
-function fetchModel(timestep = 30) {
-  return fetch(SERVER_ROOT + "/weather?timestep=" + timestep)
+function fetchModel(feature, timestep = 30) {
+  return fetch(SERVER_ROOT + "/weather?feature=" + feature + "&timestep=" + timestep)
     .then((response) => {
       if (response.status !== 200) {
         throw new Error(`Ada masalah dengan permintaan. Kode status: ${response.status}`);
