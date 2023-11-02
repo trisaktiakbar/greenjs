@@ -57,7 +57,7 @@ function inverseMinMaxNormalization(normalizedData, feature) {
   } else if (feature === "suhu_maksimum") {
     min = 23.2;
     max = 35.8;
-  } else if (feature === "suhu") {
+  } else if (feature === "suhu_rata_rata") {
     min = 24.1;
     max = 33.2;
   } else if (feature === "kelembaban_udara") {
