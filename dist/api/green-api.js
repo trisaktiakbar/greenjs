@@ -57,7 +57,7 @@ function inverseMinMaxNormalization(normalizedData, feature) {
   } else if (feature === "suhu_maksimum") {
     min = 23.2;
     max = 35.8;
-  } else if (feature === "suhu") {
+  } else if (feature === "suhu_rata_rata") {
     min = 24.1;
     max = 33.2;
   } else if (feature === "kelembaban_udara") {
@@ -75,15 +75,9 @@ function inverseMinMaxNormalization(normalizedData, feature) {
   return originalData;
 }
 
-function inverseMinMaxNormalizationAll(data) {
-  let arrayOfArrays = [data];
-  return arrayOfArrays.map((arr) => {
-    arr[0] = inverseMinMaxNormalization(arr[0], "suhu_minimum");
-    arr[1] = inverseMinMaxNormalization(arr[1], "suhu_maksimum");
-    arr[2] = inverseMinMaxNormalization(arr[2], "suhu_rata_rata");
-    arr[3] = inverseMinMaxNormalization(arr[3], "kelembaban_udara");
-    arr[4] = inverseMinMaxNormalization(arr[4], "curah_hujan");
-    arr[5] = inverseMinMaxNormalization(arr[5], "penyinaran_matahari");
+function inverseMinMaxNormalizationAll(data, feature) {
+  return data.map((arr) => {
+    arr = inverseMinMaxNormalization(arr, feature);
     return arr;
   });
 }
