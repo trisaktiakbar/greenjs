@@ -12,7 +12,6 @@
         <p class="article-text">Berikut adalah contoh kode untuk mengimpor module GreenAPI.</p>
         <CodeCardComponent codeTitle="script.js" :codeText="importModule" language="javascript" />
       </div>
-
       <div>
         <h3 class="heading-2">fetchModel()</h3>
         <p class="article-text">
