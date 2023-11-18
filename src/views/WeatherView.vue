@@ -3,9 +3,9 @@
     <div class="container">
       <h2 class="heading-1">API Cuaca</h2>
       <p class="article-text">
-        API Cuaca menggunakan algoritma Long-Short Term Memory (LSTM) untuk mendapatkan rata-rata suhu (°C), rata-rata kelembaban udara (%), rata-rata lama penyinaran matahari (jam), dan rata-rata curah hujan (mm) selama satu bulan yang
-        akan datang. Fitur-fitur yang digunakan sebagai input untuk model LSTM merupakan suhu (°C), kelembaban udara (%), lama penyinaran matahari (jam), dan curah hujan (mm) selama jumlah hari (<code class="text-sky-500">timestep</code>)
-        yang ditentukan sebelumnya.
+        API Cuaca menggunakan algoritma Long-Short Term Memory (LSTM) untuk mendapatkan suhu minimum (°C), suhu maksimum(°C), suhu rata-rata (°C), kelembaban udara (%), curah hujan (mm), dan lama penyinaran matahari (jam) selama satu bulan
+        yang akan datang. Fitur-fitur yang digunakan sebagai input untuk model LSTM merupakan suhu minimum (°C), suhu maksimum (°C), suhu rata-rata (°C), kelembaban udara (%), curah hujan (mm) dan lama penyinaran matahari (jam) selama
+        jumlah hari (<code class="text-sky-500">timestep</code>) yang telah ditentukan.
       </p>
       <div>
         <h3 class="heading-2">Import Module</h3>
@@ -16,13 +16,48 @@
         <h3 class="heading-2">fetchModel()</h3>
         <p class="article-text">
           Untuk menggunakan model LSTM dari API Cuaca, dapat dilakukan dengan <code class="text-sky-500">fetchModel()</code>. <code class="text-sky-500">fetchModel()</code> akan melakukan komunikasi dengan server atau backend untuk
-          mengunduh data model yang dibutuhkan client.
+          mendapatkan data model yang dibutuhkan client. <code class="text-sky-500">fetchModel()</code> memiliki satu parameter wajib, yaitu <code class="text-sky-500">feature</code>, yang berisi fitur yang akan diprediksi.
         </p>
+        <p class="article-text">Parameter <code class="text-sky-500">feature</code> yang dapat digunakan adalah sebagai berikut</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Deskripsi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code class="text-sky-500">"suhu_minimum"</code> atau <code class="text-sky-500">"Tn"</code></td>
+              <td class="text-start">Model untuk memprediksi fitur suhu minimum</td>
+            </tr>
+            <tr>
+              <td><code class="text-sky-500">"suhu_maksimum"</code> atau <code class="text-sky-500">"Tx"</code></td>
+              <td class="text-start">Model untuk memprediksi fitur suhu maksimum</td>
+            </tr>
+            <tr>
+              <td><code class="text-sky-500">"suhu_rata_rata"</code> atau <code class="text-sky-500">"Tavg"</code></td>
+              <td class="text-start">Model untuk memprediksi fitur suhu rata-rata</td>
+            </tr>
+            <tr>
+              <td><code class="text-sky-500">"kelembaban_udara"</code> atau <code class="text-sky-500">"RH_avg"</code></td>
+              <td class="text-start">Model untuk memprediksi fitur kelembaban udara rata-rata</td>
+            </tr>
+            <tr>
+              <td><code class="text-sky-500">"curah_hujan"</code> atau <code class="text-sky-500">"RR"</code></td>
+              <td class="text-start">Model untuk memprediksi fitur curah hujan</td>
+            </tr>
+            <tr>
+              <td><code class="text-sky-500">"penyinaran_matahari"</code> atau <code class="text-sky-500">"ss"</code></td>
+              <td class="text-start">Model untuk memprediksi fitur lama penyinaran matahari</td>
+            </tr>
+          </tbody>
+        </table>
         <p class="article-text">Berikut contoh penggunaan dari <code class="text-sky-500">fetchModel()</code></p>
         <CodeCardComponent codeTitle="script.js" :codeText="fetchModel" language="javascript" />
         <p class="article-text">
-          Secara default, model menggunakan <code class="text-sky-500">timestep</code> dengan nilai 14, yang berarti data input untuk model memiliki dimensi 14 hari. Model menyediakan dua buah nilai
-          <code class="text-sky-500">timestep</code> yang dapat digunakan, yaitu 14 untuk dimensi input 14 hari, dan 30 untuk dimensi input 30 hari.
+          Secara default, model menggunakan <code class="text-sky-500">timestep</code> dengan nilai 30, yang berarti data input untuk model memiliki dimensi 30 hari. Model menyediakan dua buah nilai
+          <code class="text-sky-500">timestep</code> yang dapat digunakan, yaitu 30 untuk dimensi input 30 hari, dan 90 untuk dimensi input 90 hari.
         </p>
         <p class="article-text">Fungsi <code class="text-sky-500">fetchModel()</code> dapat menerima parameter <code class="text-sky-500">timestep</code> seperti pada kode berikut.</p>
         <CodeCardComponent codeTitle="script.js" :codeText="timestep" language="javascript" />
@@ -31,8 +66,9 @@
       <div>
         <h3 class="heading-2">Format Data</h3>
         <p class="article-text">
-          Format Data untuk input model adalah array dengan panjang sesuai dengan <span class="text-sky-500">timestep</span> yang digunakan. Setiap array terdiri dari data <code class="text-sky-500">suhu</code>,
-          <code class="text-sky-500">kelembaban_udara</code>, <code class="text-sky-500">penyinaran_matahari</code>, dan <code class="text-sky-500">curah_hujan</code>
+          Format Data untuk input model adalah array dengan panjang sesuai dengan <span class="text-sky-500">timestep</span> yang digunakan. Setiap array terdiri dari data <code class="text-sky-500">suhu_minimum</code>,
+          <code class="text-sky-500">suhu_maksimum</code>, <code class="text-sky-500">suhu_rata_rata</code>, <code class="text-sky-500">kelembaban_udara</code>, <code class="text-sky-500">curah_hujan</code>, dan
+          <code class="text-sky-500">penyinaran_matahari</code>,
         </p>
         <p class="article-text">Berikut adalah contoh format data untuk digunakan sebagai input model.</p>
         <CodeCardComponent codeTitle="script.js" :codeText="formatDataArray" language="javascript" />
@@ -61,8 +97,8 @@
             <tr>
               <td>fitur</td>
               <td class="text-start">
-                Parameter untuk fitur yang akan dinormalisasi. Parameter fitur yang dapat digunakan antara lain <code class="text-sky-500">suhu</code>, <code class="text-sky-500">kelembaban_udara</code>,
-                <code class="text-sky-500">penyinaran_matahari</code>, dan <code class="text-sky-500">curah_hujan</code>
+                Parameter untuk fitur yang akan dinormalisasi. Parameter fitur yang dapat digunakan antara lain <code class="text-sky-500">suhu_minimum</code>, <code class="text-sky-500">suhu_maksimum</code>,
+                <code class="text-sky-500">suhu_rata_rata</code>, <code class="text-sky-500">kelembaban_udara</code>, <code class="text-sky-500">curah_hujan</code>, dan <code class="text-sky-500">penyinaran_matahari</code>
               </td>
             </tr>
           </tbody>
@@ -106,8 +142,8 @@
             <tr>
               <td>fitur</td>
               <td class="text-start">
-                Parameter untuk fitur dari data. Parameter fitur yang dapat digunakan antara lain <code class="text-sky-500">suhu</code>, <code class="text-sky-500">kelembaban_udara</code>,
-                <code class="text-sky-500">penyinaran_matahari</code>, dan <code class="text-sky-500">curah_hujan</code>
+                Parameter untuk fitur dari data. Parameter fitur yang dapat digunakan antara lain <code class="text-sky-500">suhu_minimum</code>, <code class="text-sky-500">suhu maksimum</code>,
+                <code class="text-sky-500">suhu_rata_rata</code>, <code class="text-sky-500">kelembaban_udara</code>, <code class="text-sky-500">curah_hujan</code>, dan <code class="text-sky-500">penyinaran_matahari</code>
               </td>
             </tr>
           </tbody>
@@ -118,8 +154,8 @@
       <div>
         <h3 class="heading-2">inverseMinMaxNormalizationAll()</h3>
         <p class="article-text">
-          mengembalikan nilai yang sudah dinormalisasi menggunakan teknik min-max normalization menjadi nilai aslinya dengan input berupa Array, dapat menggunakan fungsi <code class="text-sky-500">inverseMinMaxNormalizationAll()</code>.
-          Fungsi <code class="text-sky-500">inverseMinMaxNormalizationAll()</code> menerima parameter data berupa array yang nilainya akan dikembalikan ke bentuk aslinya.
+          Untuk mengembalikan nilai yang sudah dinormalisasi menggunakan teknik min-max normalization menjadi nilai aslinya dengan input berupa Array, dapat menggunakan fungsi
+          <code class="text-sky-500">inverseMinMaxNormalizationAll()</code>. Fungsi <code class="text-sky-500">inverseMinMaxNormalizationAll()</code> menerima parameter data berupa array yang nilainya akan dikembalikan ke bentuk aslinya.
         </p>
         <p class="article-text">Untuk menggunakan <code class="text-sky-500">inverseMinMaxNormalizationAll()</code>, berikut adalah contoh kode programnya.</p>
         <CodeCardComponent codeTitle="script.js" :codeText="inverseMinMaxNormalizationAllArray" language="javascript" />
@@ -127,7 +163,7 @@
           Fungsi <code class="text-sky-500">inverseMinMaxNormalizationAll()</code> juga dapat menerima parameter berupa object dengan melakukan transformasi menggunakan fungsi
           <code class="text-sky-500">transformObjectsToArray()</code> terhadap object, sebelum dimasukkan sebagai parameter fungsi <code class="text-sky-500">inverseMinMaxNormalizationAll()</code>.
         </p>
-        <p class="article-text">Berikut adalah contoh pemanggilan fungsi <code class="text-sky-500">minMaxNormalizationAll()</code> dengan parameter berupa object.</p>
+        <p class="article-text">Berikut adalah contoh pemanggilan fungsi <code class="text-sky-500">inverseMinMaxNormalizationAll()</code> dengan parameter berupa object.</p>
         <CodeCardComponent codeTitle="script.js" :codeText="inverseMinMaxNormalizationAllObject" language="javascript" />
       </div>
       <div>
@@ -158,7 +194,7 @@ export default {
       importModule: `
   import * as greenAPI from "https://greenjs.netlify.app/api/green-api.js";`,
       fetchModel: `
-  greenAPI.fetchModel()
+  greenAPI.fetchModel("Tn")
     .then((res) => {
       greenAPI.loadModel(res.model).then((loadedModel) => {
         const model = loadedModel;
@@ -169,7 +205,7 @@ export default {
       console.error("Terjadi kesalahan:", error);
     });`,
       timestep: `
-  greenAPI.fetchModel(14) // Isi dengan timestep yang diinginkan (14 atau 30)
+  greenAPI.fetchModel("Tn", 30) // Isi dengan timestep yang diinginkan (30 atau 90)
     .then((res) => {
       greenAPI.loadModel(res.model).then((loadedModel) => {
         const model = loadedModel;
@@ -182,16 +218,16 @@ export default {
       formatDataArray: `
   let data = [
     // Format data :
-    // [suhu, kelembaban_udara, penyinaran_matahari, curah_hujan]
-    [23, 65, 12, 10],
-    [24, 75, 11, 15],
+    // [suhu_minimum, suhu_maksimum, suhu_rata_rata, kelembaban_udara, curah_hujan, penyinaran_matahari]
+    [23, 30, 27, 65, 12, 10],
+    [24, 30, 28, 75, 11, 11],
     // ...
     // Tambahkan sesuai dengan jumlah timestep yang digunakan
   ];`,
       formatDataObject: `
   let data = [
-    { suhu: 23, kelembaban_udara: 24, penyinaran_matahari: 4, curah_hujan: 10 },
-    { suhu: 24, kelembaban_udara: 75, penyinaran_matahari: 4, curah_hujan: 9 },
+    { suhu_minimum: 23, suhu_maksimum: 30, suhu_rata_rata : 27, kelembaban_udara: 65, curah_hujan: 12, penyinaran_matahari: 10 },
+    { suhu_minimum: 24, suhu_maksimum: 30, suhu_rata_rata : 28, kelembaban_udara: 75, curah_hujan: 11, penyinaran_matahari: 11 },
     // ...
     // Tambahkan sesuai dengan jumlah timestep yang digunakan
   ];
@@ -199,16 +235,16 @@ export default {
   data = greenAPI.transformArrayOfObjectsToArray(data);
   console.log(data);`,
       minMaxNormalization: `
-  let suhu = 29;
-  let normalisasiSuhu = greenAPI.minMaxNormalization(suhu, "suhu");
+  let curahHujan = 29;
+  let normalisasiCurahHujan = greenAPI.minMaxNormalization(curah_hujan, "curah_hujan");
 
   console.log(normalisasiSuhu);`,
 
       minMaxNormalizationAllArray: `
   let data = [
-    // [suhu, kelembaban_udara, penyinaran_matahari, curah_hujan]
-    [30, 80, 7, 10],
-    [32, 75, 16, 9],
+    // [suhu_minimum, suhu_maksimum, suhu_rata_rata, kelembaban_udara, curah_hujan,  penyinaran_matahari]
+    [28, 30, 29, 80, 7, 10],
+    [27, 32, 28, 75, 16, 9],
     // ...
   ];
 
@@ -216,8 +252,8 @@ export default {
   console.log(data);`,
       minMaxNormalizationAllObject: `
   let data = [
-    { suhu: 23, kelembaban_udara: 24, penyinaran_matahari: 4, curah_hujan: 10 },
-    { suhu: 24, kelembaban_udara: 75, penyinaran_matahari: 4, curah_hujan: 9 },
+    { suhu_minimum: 28, suhu_maksimum: 30, suhu_rata_rata: 29, kelembaban_udara: 80, curah_hujan: 7, penyinaran_matahari: 10 },
+    { suhu_minimum: 27, suhu_maksimum: 32, suhu_rata_rata: 28, kelembaban_udara: 75, curah_hujan: 16, penyinaran_matahari: 9 },
     // ...
   ];
 
@@ -232,22 +268,25 @@ export default {
   predictions = predictions.dataSync();
   console.log(predictions);`,
       inverseMinMaxNormalization: `
-  let normalisasiSuhu = 0.766;
-  let suhu = greenAPI.inverseMinMaxNormalization(normalisasiSuhu, "suhu");
+  let normalisasiCurahHujan = 0.566;
+  let curahHujan = greenAPI.inverseMinMaxNormalization(normalisasiCurahHujan, "curah_hujan");
 
-  console.log(suhu);`,
+  console.log(curahHujan);`,
 
       inverseMinMaxNormalizationAllArray: `
-  let data = [0.766, 0.523, 0.443, 0.01]; // [suhu, kelembaban_udara, penyinaran_matahari, curah_hujan]
+  let data = [0.766, 0.8, 0.78, 0.523, 0.443, 0.01];
+  // [suhu_minimum, suhu_maksimum, suhu_rata_rata, kelembaban_udara, curah_hujan, penyinaran_matahari]
 
   data = greenAPI.inverseMinMaxNormalizationAll(data);
   console.log(data);`,
       inverseMinMaxNormalizationAllObject: `
   let dataNormalisasi = {
-    suhu: 0.766,
+    suhu_minimum: 0.766,
+    suhu_maksimum: 0.8,
+    suhu_rata_rata: 0.78,
     kelembaban_udara: 0.523,
-    penyinaran_matahari: 0.443,
-    curah_hujan: 0.01
+    curah_hujan: 0.443,
+    penyinaran_matahari: 0.01
   };
 
   let data = greenAPI.transformObjectsToArray(dataNormalisasi);
@@ -259,8 +298,8 @@ export default {
   import * as greenAPI from "https://greenjs.netlify.app/api/green-api.js";
 
   let data = [
-    { suhu: 23, kelembaban_udara: 24, penyinaran_matahari: 4, curah_hujan: 10 },
-    { suhu: 24, kelembaban_udara: 75, penyinaran_matahari: 4, curah_hujan: 9 },
+    { suhu_minimum: 23, suhu_maksimum:30, suhu_rata_rata: 27, kelembaban_udara: 66, curah_hujan: 10, penyinaran_matahari: 4 },
+    { suhu_minimum: 24, suhu_maksimum:31, suhu_rata_rata: 28, kelembaban_udara: 75, curah_hujan: 9, penyinaran_matahari: 4 },
     // ...
   ];
 
@@ -268,7 +307,7 @@ export default {
   data = greenAPI.minMaxNormalizationAll(data);
 
   greenAPI
-    .fetchModel(14) // Isi dengan timestep yang diinginkan (14 atau 30)
+    .fetchModel("Tn")
     .then((res) => {
       greenAPI.loadModel(res.model).then((loadedModel) => {
         const model = loadedModel;

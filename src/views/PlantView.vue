@@ -31,8 +31,8 @@
         <p class="article-text">Berikut adalah contoh kode untuk membuat parameter query sebelum melakukan HTTP Request ke API.</p>
         <CodeCardComponent codeTitle="script.js" :codeText="codeParameterQuery" language="javascript" />
         <p class="article-text">
-          Ketika melakukan HTTP Request ke API ini, diperlukan query berupa object yang berisi properti <code class="text-sky-500">suhu</code>, <code class="text-sky-500">kelembaban_udara</code>, <code class="text-sky-500">ph_tanah</code>,
-          dan <code class="text-sky-500">curah_hujan</code>.
+          Ketika melakukan HTTP Request ke API ini, diperlukan parameter query berupa object <code class="text-sky-500">data</code> yang berisi properti <code class="text-sky-500">suhu</code>,
+          <code class="text-sky-500">kelembaban_udara</code>, <code class="text-sky-500">ph_tanah</code>, dan <code class="text-sky-500">curah_hujan</code>.
         </p>
       </div>
       <div>
