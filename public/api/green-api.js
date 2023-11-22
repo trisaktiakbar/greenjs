@@ -98,7 +98,7 @@ function transformObjectsToArray(obj) {
   return result;
 }
 
-function fetchModel(feature, timestep = 30) {
+function fetchModel(feature) {
   if (feature == "suhu_minimum") {
     feature = "Tn";
   } else if (feature == "suhu_maksimum") {
@@ -113,7 +113,7 @@ function fetchModel(feature, timestep = 30) {
     feature = "ss";
   }
 
-  return fetch(SERVER_ROOT + "/weather?feature=" + feature + "&timestep=" + timestep)
+  return fetch(SERVER_ROOT + "/weather?feature=" + feature)
     .then((response) => {
       if (response.status !== 200) {
         throw new Error(`Ada masalah dengan permintaan. Kode status: ${response.status}`);
