@@ -42,7 +42,7 @@ function minMaxNormalization(data, feature) {
     max = 11.3;
   } else if (feature === "curah_hujan") {
     min = 0;
-    max = 218.8;
+    max = 218.0;
   }
 
   const normalizedData = (data - min) / (max - min);
