@@ -1,6 +1,6 @@
 import "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs";
 
-const SERVER_ROOT = "https://grumpy-pig-stole.cyclic.app";
+const SERVER_ROOT = "https://greenjs-api.vercel.app";
 
 function getKNNModel(data) {
   return SERVER_ROOT + "/plant?data=" + data;
