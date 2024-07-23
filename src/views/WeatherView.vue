@@ -315,7 +315,7 @@ export default {
         let predictions = model.predict(inputTensor);
 
         predictions = predictions.dataSync();
-        predictions = greenAPI.inverseMinMaxNormalizationAll(predictions);
+        predictions = greenAPI.inverseMinMaxNormalizationAll(predictions. "suhu minimum");
 
         console.log(predictions);
       });
